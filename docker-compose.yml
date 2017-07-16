@@ -1,20 +1,20 @@
 version: "2"
 services:
-  mittwald_shopware_shop:
-    container_name: mittwald_schulung_shop
+  sw52_shop:
+    container_name: sw52_shop
     image: mittwald/shopware:latest
     #restart: always
     links:
-      - mittwald_shopware_db:db
-      - mittwald_shopware_mailcatcher:smtp
+      - sw52_db:db
+      - sw52_mailcatcher:smtp
     volumes:
       - ./Volumes/Shop/Config/php/php.ini:/usr/local/etc/php/php.ini
-      - data-sync-mittwald:/var/www/html:rw
+      - data-sync-sw52:/var/www/html:rw
     environment:
-      VIRTUAL_HOST: www.mittwald-shopware.dev
+      VIRTUAL_HOST: www.sw52.dev
 
-  mittwald_shopware_db:
-    container_name: mittwald_schulung_db
+  sw52_db:
+    container_name: sw52_db
     image: mysql:5.7
     #restart: always
     ports:
@@ -27,8 +27,8 @@ services:
     volumes:
       - ./Volumes/Db/:/var/lib/mysql
 
-  mittwald_shopware_nginx_proxy:
-    container_name: mittwald_shopware_nginx_proxy
+  sw52_nginx_proxy:
+    container_name: sw52_nginx_proxy
     #restart: always
     image: jwilder/nginx-proxy:latest
     ports:
@@ -38,23 +38,23 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
-  mittwald_shopware_phpmyadmin:
-    container_name: mittwald_shopware_phpmyadmin
+  sw52_phpmyadmin:
+    container_name: sw52_phpmyadmin
     #restart: always
     image: phpmyadmin/phpmyadmin
     links:
-      - mittwald_shopware_db:db
+      - sw52_db:db
     environment:
-      VIRTUAL_HOST: db.mittwald-shopware.dev
+      VIRTUAL_HOST: db.sw52.dev
 
-  mittwald_shopware_mailcatcher:
+  sw52_mailcatcher:
     image: hinshun/mailcatcher
     environment:
-      VIRTUAL_HOST: mail.mittwald-shopware.dev
+      VIRTUAL_HOST: mail.sw52.dev
     ports:
       - 1080:1080 
 
 volumes:
-  data-sync-mittwald:
+  data-sync-sw52:
     external: true
 
