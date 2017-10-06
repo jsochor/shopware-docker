@@ -1,20 +1,20 @@
 version: "2"
 services:
-  sw52_shop:
-    container_name: sw52_shop
-    image: mittwald/shopware:latest
+  sw53_shop:
+    container_name: sw53_shop
+    build: ./Docker/php7
     #restart: always
     links:
-      - sw52_db:db
-      - sw52_mailcatcher:smtp
+      - sw53_db:db
+      - sw53_mailcatcher:smtp
     volumes:
       - ./Volumes/Shop/Config/php/php.ini:/usr/local/etc/php/php.ini
-      - data-sync-sw52:/var/www/html:rw
+      - data-sync-sw53:/var/www/html:rw
     environment:
-      VIRTUAL_HOST: www.sw52.dev
+      VIRTUAL_HOST: www.sw53.dev
 
-  sw52_db:
-    container_name: sw52_db
+  sw53_db:
+    container_name: sw53_db
     image: mysql:5.7
     #restart: always
     ports:
@@ -27,8 +27,8 @@ services:
     volumes:
       - ./Volumes/Db/:/var/lib/mysql
 
-  sw52_nginx_proxy:
-    container_name: sw52_nginx_proxy
+  sw53_nginx_proxy:
+    container_name: sw53_nginx_proxy
     #restart: always
     image: jwilder/nginx-proxy:latest
     ports:
@@ -38,23 +38,23 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
-  sw52_phpmyadmin:
-    container_name: sw52_phpmyadmin
+  sw53_phpmyadmin:
+    container_name: sw53_phpmyadmin
     #restart: always
     image: phpmyadmin/phpmyadmin
     links:
-      - sw52_db:db
+      - sw53_db:db
     environment:
-      VIRTUAL_HOST: db.sw52.dev
+      VIRTUAL_HOST: db.sw53.dev
 
-  sw52_mailcatcher:
+  sw53_mailcatcher:
     image: hinshun/mailcatcher
     environment:
-      VIRTUAL_HOST: mail.sw52.dev
+      VIRTUAL_HOST: mail.sw53.dev
     ports:
       - 1080:1080 
 
 volumes:
-  data-sync-sw52:
+  data-sync-sw53:
     external: true
 
