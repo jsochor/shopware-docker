@@ -48,11 +48,11 @@ services:
       VIRTUAL_HOST: db.sw53.dev
 
   sw53_mailcatcher:
-    image: hinshun/mailcatcher
+    image: schickling/mailcatcher
     environment:
       VIRTUAL_HOST: mail.sw53.dev
     ports:
-      - 1080:1080 
+      - 3309:1080 
 
 volumes:
   data-sync-sw53:
