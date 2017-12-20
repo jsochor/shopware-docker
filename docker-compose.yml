@@ -11,7 +11,7 @@ services:
       - ./Volumes/Shop/Config/php/php.ini:/usr/local/etc/php/php.ini
       - data-sync-sw53:/var/www/html:rw
     environment:
-      VIRTUAL_HOST: www.sw53.dev
+      VIRTUAL_HOST: www.sw53.localhost
 
   sw53_db:
     container_name: sw53_db
@@ -45,14 +45,14 @@ services:
     links:
       - sw53_db:db
     environment:
-      VIRTUAL_HOST: db.sw53.dev
+      VIRTUAL_HOST: db.sw53.localhost
 
   sw53_mailcatcher:
     image: schickling/mailcatcher
     environment:
-      VIRTUAL_HOST: mail.sw53.dev
+      VIRTUAL_HOST: mail.sw53.localhost
     ports:
-      - 3309:1080 
+      - 3309:1080
 
 volumes:
   data-sync-sw53:
